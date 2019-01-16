@@ -27,11 +27,14 @@ RUN curl -o /etc/yum.repos.d/public-yum-ol7.repo http://yum.oracle.com/public-yu
     && yum-config-manager --enable ol7_software_collections \
     && yum install -y bzip2-devel ed gcc gcc-c++ gcc-gfortran gzip file fontconfig less libcurl-devel make openssl-devel readline-devel tar vi which xz-devel zlib-devel \
     && yum install -y glibc-static libcxx libcxx-devel llvm-toolset-7 zlib-static \
+    && yum install git \
     && rm -rf /var/cache/yum
 
 RUN fc-cache -f -v
 
 ADD gu-wrapper.sh /usr/local/bin/gu
+
+RUN gu install R
 
 RUN set -eux \
     && curl --fail --silent --location --retry 3 ${GRAALVM_PKG} \
